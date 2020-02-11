@@ -14,11 +14,21 @@ namespace e_conomicTest
         [Required]
         public string Name { get; set; }
         public string Email { get; set; }
-        public double Balance { get; set; }
+        public decimal Balance { get; set; }
+        public decimal DueAmount { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string Zip { get; set; }
 
         public override string ToString()
         {
-            return "-----Kunde-----\nID:\t" + CustomerNumber + "\nNavn:\t" + Name + "\nEmail:\t" + Email + "\nBalance:\t" + Balance;
+            return 
+                "-----Kunde-----\nID:\t\t" + CustomerNumber + 
+                "\nNavn:\t\t" + Name + 
+                "\nEmail:\t\t" + Email + 
+                "\nAdresse:\t" + Address + ", " + Zip + " " + City +
+                "\nBalance:\t" + String.Format("{0:C}", Balance) +
+                "\nForfaldent:\t" + String.Format("{0:C}", DueAmount);
         }
     }
 }
