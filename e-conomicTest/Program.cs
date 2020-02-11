@@ -10,12 +10,12 @@ namespace e_conomicTest
     class Program
     {
 
-        static HttpClient client = new HttpClient();
+        static readonly HttpClient client = new HttpClient();
 
         //Metoder der har med eksempel 1 at gøre - hent en kunde fra API og vis stamdata + balance/forfaldent i console
         static async Task ShowCustomers()
         {
-            Customer customer = new Customer();
+            Customer customer;
             try
             {
                 customer = await GetCustomerAsync(client.BaseAddress + "/customers/", 1);
@@ -52,12 +52,12 @@ namespace e_conomicTest
 
         static async Task ShowOverdue(int customerNumber)
         {
-            List<Invoice> overdue = new List<Invoice>();
+            List<Invoice> overdue;
             try
             {
                 overdue = await GetOverdueInvoicesAsync(client.BaseAddress + "/invoices/overdue/?filter=customer.customerNumber$eq:" + customerNumber.ToString() + 
                     "$and:date$gt:2019-10-01$and:date$lt:2019-10-03&pagesize=1000&sort=date");
-                Console.WriteLine(overdue.Count);
+                Console.WriteLine("Total number of overdue invoices in date range is {0}",overdue.Count);
             }
             catch(Exception e)
             {
@@ -93,10 +93,10 @@ namespace e_conomicTest
             //Eksempel 1; Vis en kunde med stamdata og balance/forfaldent
             //await ShowCustomers();
             //Eksempel 2; Vis en liste med forfaldne fakturaer på en bestemt kunde - kundenummer medsendes i metodekald
-            await ShowOverdue(1);
+            //await ShowOverdue(1);
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
             RunAsync().GetAwaiter().GetResult();
             Console.ReadLine();
